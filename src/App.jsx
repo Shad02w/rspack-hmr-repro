@@ -1,16 +1,13 @@
 import React from 'react'
-import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import './App.css'
 
-function memo(displayName, fn) {
-    const m = React.memo(fn)
-    m.displayName = displayName
-    return m
+function memo(displayName, functionComponent) {
+    return React.memo(Object.assign(functionComponent, { displayName }))
 }
 
-const UnwrappedApp = () => {
-    const [count, setCount] = useState(0)
+const UnwrappedApp = memo('App', () => {
+    const [count, setCount] = React.useState(0)
 
     return (
         <div className="App">
@@ -29,7 +26,7 @@ const UnwrappedApp = () => {
             <p className="read-the-docs">Click on the Rspack and React logos to learn more</p>
         </div>
     )
-}
+})
 
 // memo() make the whole app reload when updating in UnwrappedApp
 export const App = memo('App', UnwrappedApp)
